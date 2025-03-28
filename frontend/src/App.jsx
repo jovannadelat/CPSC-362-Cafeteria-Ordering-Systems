@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Menu from './pages/Menu';
 import OrderHistory from './pages/OrderHistory';
 import Checkout from './pages/Checkout';
+import "./App.css"
 
 function App() {
 
