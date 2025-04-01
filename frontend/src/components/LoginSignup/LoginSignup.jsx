@@ -1,0 +1,77 @@
+import React, {useState} from 'react'
+import { useNavigate } from "react-router-dom";
+import './LoginSignup.css'
+
+import user_icon from '../../assets/LoginSignup/person.png'
+import email_icon from '../../assets/LoginSignup/email.png'
+import password_icon from '../../assets/LoginSignup/password.png'
+
+const LoginSignup = () => {
+
+    const [action,setAction] = useState("Sign Up");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
+
+    const handleLogin = () => {
+        if (email === "test@example.com" && password === "password123"){
+            setError("");
+            navigate("/home");
+        } else {
+            setError ("Invaid email or password!");
+        }
+    };
+
+    return (
+        <div className="container">
+            <div className="header">
+                <div className="text">{action}</div>
+                <div className="underline"></div>
+            </div>
+            
+            <div className="inputs">
+                {action==="Login"?<div></div>:<div className="input">
+                <img src={user_icon} alt="" />
+                <input type="text" placeholder='Name'/>
+                </div>}
+                
+            </div>
+            <div className="inputs">
+                <div className="input">
+                <img src={email_icon} alt="" />
+                <input type="email" 
+                        placeholder='Email Id'
+                        value = {email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        />
+                </div>
+            </div>
+            <div className="inputs">
+                <div className="input">
+                <img src={password_icon} alt="" />
+                <input type="password" 
+                        placeholder='Password'
+                        value={password}
+                        onChange={(e)=>setPassword(e.target.value)}
+                        />
+                </div>
+            </div>
+            {action==="Sign Up"?<div></div>:<div className="forgot-password">Lost Password? <span>Click Here!</span></div>
+            }
+            <div className="submit-container">
+                <div className={action==="Login"?"submit gray":"submit"} onClick={()=>{setAction("Sign Up")}}>Sign Up</div>
+                <div className={action==="Sign Up"?"submit gray":"submit"} action="/home" onClick={() => {
+                    if(action === "Sign Up"){
+                        setAction("Login");
+                    } else {
+                        handleLogin();
+                    }
+                }}>Login</div>
+            </div>
+        </div>
+    )
+
+}
+
+export default LoginSignup
