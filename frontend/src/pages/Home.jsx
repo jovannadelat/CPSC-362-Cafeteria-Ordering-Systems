@@ -14,7 +14,7 @@ function Home() {
     };
 
     const overlayStyle = {
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        backgroundColor: 'rgb(240, 240, 240)',
         padding: '40px',
         borderRadius: '12px',
         textAlign: 'center',
