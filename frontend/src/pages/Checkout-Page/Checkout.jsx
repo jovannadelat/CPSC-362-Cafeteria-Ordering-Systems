@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { useCart } from './CartContext';
+import { useCart } from "../Checkout-Page/CartContext";
 
 const CheckoutContainer = styled.div`
   display: flex;
