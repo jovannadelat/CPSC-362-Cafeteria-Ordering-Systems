@@ -18,7 +18,7 @@ function Home() {
         padding: '40px',
         borderRadius: '12px',
         textAlign: 'center',
-        color: 'white',
+        color: 'black',
     };
 
     const headingStyle = {
