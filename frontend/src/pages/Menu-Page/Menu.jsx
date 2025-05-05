@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { useCart } from './CartContext';
+import { useCart } from "../Checkout-Page/CartContext";
 
 const MenuLayout = styled.div`
     display: flex;
