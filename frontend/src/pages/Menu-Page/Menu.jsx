@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useCart } from './CartContext';
 
 const MenuLayout = styled.div`
     display: flex;
@@ -70,15 +71,11 @@ const drinkItems = [
 ];
 
 const Menu = () => {
-    const [cart, setCart] = useState([]);
     const navigate = useNavigate();
-
-    const addToCart = (item) => {
-        setCart((prevCart) => [...prevCart, item]);
-    };
+    const { addToCart } = useCart();
 
     const handleCheckoutClick = () => {
-        navigate('/checkout', { state: { cart } });
+        navigate('/checkout');
     };
 
     const handleBackClick = () => {
