@@ -106,11 +106,12 @@ const Menu = () => {
                         <MenuButton onClick={() => addToCart(item)}>Add to Cart</MenuButton>
                     </ItemCard>
                 ))}
-                <ButtonBox>
+                
+            </ItemContainer>
+            <ButtonBox>
                     <MenuButton onClick={handleBackClick}>Back</MenuButton>
                     <MenuButton onClick={handleCheckoutClick}>Checkout</MenuButton>
                 </ButtonBox>
-            </ItemContainer>
         </MenuLayout>
     );
 };
