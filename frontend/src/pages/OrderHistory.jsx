@@ -128,8 +128,8 @@ return (
             </ItemsList>
             
             <div style={{ textAlign: 'right', fontWeight: 'bold' }}>
-              Total: ${order.total.toFixed(2)}
-            </div>
+  Total: ${order.total?.toFixed(2) || '0.00'}
+</div>
           </OrderCard>
         ))
       )}
