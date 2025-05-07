@@ -60,12 +60,12 @@ function OrderHistory() {
     {
       orderNumber: 1001,
       Total: 18.97,
-      order-details: [
+      "orderDetails": [
         { name: "Main", quantity: 2 },
         { name: "Side", quantity: 1 },
         { name: "Bev", quantity: 1 }
       ],
-      Delivery-Status: true,
+      deliveryStatus: true,
       date: "2023-11-15T14:30:00Z"
     },
     {
