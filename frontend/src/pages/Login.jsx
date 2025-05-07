@@ -18,7 +18,6 @@ const PageBackground = styled.div`
 const Container = styled.div`
   padding: 20px;
   font-family: Arial, sans-serif;
-  background-color: rgba(255, 255, 255, 0.8); /* Optional: To make the content stand out from the background */
   border-radius: 12px;
   width: 100%;
   max-width: 400px;
