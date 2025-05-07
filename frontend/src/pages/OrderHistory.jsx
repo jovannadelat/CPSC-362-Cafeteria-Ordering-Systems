@@ -82,18 +82,17 @@ function OrderHistory() {
 
 
 //not sure if this next part is necessary, might be easier to remove
-const formatOrderDetails = (details: OrderItem[] | string[]) => {
-    if (details.length === 0) return [];
+const formatOrderDetails = (details) => {
+  if (!details || details.length === 0) return [];
     
     // Handle both string and object formats
-    if (typeof details[0] === 'string') {
-      return details as string[];
-    }
-    return (details as OrderItem[]).map(item => 
-      `${item.quantity}x ${item.name}`
-    );
-  };
-
+    if (typeof details[0] === "string") {
+    return details.map((item, index) => <li key={index}>{item}</li>);
+  }
+    return details.map((item, index) => (
+    <li key={index}>{item.name} (x{item.quantity})</li>
+  ));
+};
 
 
 //this part stays
