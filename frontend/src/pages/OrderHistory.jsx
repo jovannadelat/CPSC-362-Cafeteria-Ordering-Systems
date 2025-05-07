@@ -56,9 +56,9 @@ function OrderHistory() {
 
     const navigate = useNavigate();
 
-    const orders: Order[] = [
+    const orders = [
     {
-      Order-Number: 1001,
+      orderNumber: 1001,
       Total: 18.97,
       order-details: [
         { name: "Main", quantity: 2 },
