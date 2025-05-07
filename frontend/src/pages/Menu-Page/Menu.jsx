@@ -3,6 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useCart } from "../Checkout-Page/CartContext";
 
+const PageBackground = styled.div`
+  background-image: url("https://images.unsplash.com/photo-1730780883153-b3c046b001c1?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  padding: 40px;
+`;
+
 const MenuLayout = styled.div`
     display: flex;
     gap: 20px;
