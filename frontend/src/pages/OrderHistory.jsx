@@ -2,11 +2,22 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-//styled stuff
-//may need changing to fit in with colors of the rest of the website
+// Add background image to entire page
+const PageBackground = styled.div`
+  background-image: url("https://images.unsplash.com/photo-1730780883153-b3c046b001c1?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  padding: 40px;
+`;
+
 const Container = styled.div`
   padding: 20px;
   font-family: Arial, sans-serif;
+  background-color: rgba(255, 255, 255, 0.8); /* Optional: To make the content stand out from the background */
+  border-radius: 12px;
+  max-width: 1200px;
+  margin: 0 auto;
 `;
 
 const BackButton = styled.button`
@@ -54,9 +65,9 @@ const Divider = styled.hr`
 
 function OrderHistory() {
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const orders = [
+  const orders = [
     {
       orderNumber: 1001,
       Total: 18.97,
@@ -80,60 +91,58 @@ function OrderHistory() {
     }
   ];
 
-
-//not sure if this next part is necessary, might be easier to remove
-const formatOrderDetails = (details) => {
-  if (!details || details.length === 0) return [];
+  const formatOrderDetails = (details) => {
+    if (!details || details.length === 0) return [];
     
     // Handle both string and object formats
     if (typeof details[0] === "string") {
-    return details.map((item, index) => <li key={index}>{item}</li>);
-  }
+      return details.map((item, index) => <li key={index}>{item}</li>);
+    }
     return details.map((item, index) => (
-    <li key={index}>{item.name} (x{item.quantity})</li>
-  ));
-};
+      <li key={index}>{item.name} (x{item.quantity})</li>
+    ));
+  };
 
+  return (
+    <PageBackground>
+      <Container>
+        <BackButton onClick={() => navigate('/home')}>← Back to Home</BackButton>
+        <h1>Order History</h1>
 
-//this part stays
-return (
-    <Container>
-      <BackButton onClick={() => navigate('/home')}>← Back to Home</BackButton>
-      <h1>Order History</h1>
-      
-      {orders.length === 0 ? (
-        <p>No orders found</p>
-      ) : (
-        orders.map(order => (
-          <OrderCard key={order.orderNumber}>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <h3>Order #{order.orderNumber}</h3>
-              <StatusBadge delivered={order.deliveryStatus}>
-                {order.deliveryStatus ? 'Delivered' : 'In Progress'}
-              </StatusBadge>
-            </div>
-            
-            {order.date && (
-              <p style={{ color: '#666', marginTop: 4 }}>
-                {new Date(order.date).toLocaleDateString()} at {new Date(order.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-              </p>
-            )}
-            
-            <Divider />
-            
-            <ItemsList>
-              {formatOrderDetails(order.orderDetails).map((item, index) => (
-                <li key={index}>{item}</li>
-              ))}
-            </ItemsList>
-            
-            <div style={{ textAlign: 'right', fontWeight: 'bold' }}>
-  Total: ${order.total?.toFixed(2) || '0.00'}
-</div>
-          </OrderCard>
-        ))
-      )}
-    </Container>
+        {orders.length === 0 ? (
+          <p>No orders found</p>
+        ) : (
+          orders.map(order => (
+            <OrderCard key={order.orderNumber}>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <h3>Order #{order.orderNumber}</h3>
+                <StatusBadge delivered={order.deliveryStatus}>
+                  {order.deliveryStatus ? 'Delivered' : 'In Progress'}
+                </StatusBadge>
+              </div>
+
+              {order.date && (
+                <p style={{ color: '#666', marginTop: 4 }}>
+                  {new Date(order.date).toLocaleDateString()} at {new Date(order.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </p>
+              )}
+
+              <Divider />
+
+              <ItemsList>
+                {formatOrderDetails(order.orderDetails).map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
+              </ItemsList>
+
+              <div style={{ textAlign: 'right', fontWeight: 'bold' }}>
+                Total: ${order.total?.toFixed(2) || '0.00'}
+              </div>
+            </OrderCard>
+          ))
+        )}
+      </Container>
+    </PageBackground>
   );
 }
 
