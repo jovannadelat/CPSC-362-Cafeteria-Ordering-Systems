@@ -63,6 +63,12 @@ const TotalBox = styled.div`
   height: 150px;
 `;
 
+const AddressBox = styled.div`
+  background-color: #f9f9f9;
+  padding: 10px;
+  margin-bottom: 10px;
+`;
+
 const PaymentBox = styled.div`
   background-color: #f9f9f9;
   padding: 10px;
@@ -75,15 +81,18 @@ const PaymentInput = styled.input`
   margin: 5px 0;
   border: 1px solid #ddd;
   border-radius: 4px;
+  box-sizing: border-box; 
 `;
 
 const PaymentRow = styled.div`
   display: flex;
   gap: 10px;
+  width: 100%; /* Added to ensure full width */
 `;
 
 const PaymentField = styled.div`
   flex: 1;
+  min-width: 0; /* Added to prevent overflow */
 `;
 
 const ButtonBox = styled.div`
@@ -110,31 +119,74 @@ const Checkout = () => {
   const [cardNumber, setCardNumber] = React.useState('');
   const [expDate, setExpDate] = React.useState('');
   const [cvv, setCvv] = React.useState('');
+  const [address, setAddress] = React.useState({
+    street: '',
+    city: '',
+    state: '',
+    zip: '',
+    country: ''
+  });
 
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   const handleCheckout = () => {
+    if (!address.street.trim()) {
+      alert('Please enter your street address');
+      return;
+    }
+    if (address.street.length < 5) {
+      alert('Street address seems too short');
+      return;
+    }
+    if (!address.city.trim()) {
+      alert('Please enter your city');
+      return;
+    }
+    if (!/^[a-zA-Z\s-]+$/.test(address.city)) {
+      alert('City name can only contain letters, spaces and hyphens');
+      return;
+    }
+    if (!address.state.trim()) {
+      alert('Please enter your state/province');
+      return;
+    }
+    if (!/^[a-zA-Z\s]+$/.test(address.state)) {
+      alert('State can only contain letters and spaces');
+      return;
+    }
+    if (!address.zip.trim()) {
+      alert('Please enter your ZIP/postal code');
+      return;
+    }
+    if (!/^\d{5}(-\d{4})?$/.test(address.zip)) {
+      alert('Please enter a valid ZIP code (5 digits or 9 digits with hyphen)');
+      return;
+    }
+    if (!address.country.trim()) {
+      alert('Please enter your country');
+      return;
+    }
+    if (!/^[a-zA-Z\s]+$/.test(address.country)) {
+      alert('Country name can only contain letters and spaces');
+      return;
+    }
     if (!cardNumber || !expDate || !cvv) {
       alert('Please fill in all payment details');
       return;
     }
-    
     if (cardNumber.length !== 16 || !/^\d+$/.test(cardNumber)) {
       alert('Please enter a valid 16-digit card number');
       return;
     }
-    
     if (!/^\d{2}\/\d{2}$/.test(expDate)) {
       alert('Please enter expiration date in MM/YY format');
       return;
     }
-
     const month = parseInt(expDate.split('/')[0], 10); 
     if (month < 1 || month > 12) {
       alert('Month must be between 01-12');
       return;
     }
-    
     if (cvv.length < 3 || cvv.length > 4 || !/^\d+$/.test(cvv)) {
       alert('Please enter a valid CVV (3 or 4 digits)');
       return;
@@ -171,6 +223,52 @@ const Checkout = () => {
           <h3>Total</h3>
           <p>${total.toFixed(2)}</p>
         </TotalBox>
+
+        <AddressBox>
+          <h3>Shipping Information</h3>
+          <PaymentInput
+            type="text"
+            placeholder="Street Address"
+            value={address.street}
+            onChange={(e) => setAddress({...address, street: e.target.value})}
+          />
+          <PaymentRow>
+            <PaymentField>
+              <PaymentInput
+                type="text"
+                placeholder="City"
+                value={address.city}
+                onChange={(e) => setAddress({...address, city: e.target.value})}
+              />
+            </PaymentField>
+            <PaymentField>
+              <PaymentInput
+                type="text"
+                placeholder="State"
+                value={address.state}
+                onChange={(e) => setAddress({...address, state: e.target.value})}
+              />
+            </PaymentField>
+          </PaymentRow>
+          <PaymentRow>
+            <PaymentField>
+              <PaymentInput
+                type="text"
+                placeholder="ZIP Code"
+                value={address.zip}
+                onChange={(e) => setAddress({...address, zip: e.target.value})}
+              />
+            </PaymentField>
+            <PaymentField>
+              <PaymentInput
+                type="text"
+                placeholder="Country"
+                value={address.country}
+                onChange={(e) => setAddress({...address, country: e.target.value})}
+              />
+            </PaymentField>
+          </PaymentRow>
+        </AddressBox>
 
         <PaymentBox>
           <h3>Payment Information</h3>
