@@ -87,12 +87,12 @@ const PaymentInput = styled.input`
 const PaymentRow = styled.div`
   display: flex;
   gap: 10px;
-  width: 100%; /* Added to ensure full width */
+  width: 100%; 
 `;
 
 const PaymentField = styled.div`
   flex: 1;
-  min-width: 0; /* Added to prevent overflow */
+  min-width: 0; 
 `;
 
 const ButtonBox = styled.div`
