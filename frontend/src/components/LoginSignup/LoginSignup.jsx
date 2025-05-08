@@ -15,7 +15,7 @@ const LoginSignup = () => {
 
     const handleSignup = async () => {
         try {
-            const response = await fetch('http://localhost:3500/register', {
+            const response = await fetch('http://localhost:4000/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
@@ -36,7 +36,7 @@ const LoginSignup = () => {
 
     const handleLogin = async () => {
         try {
-            const response = await fetch('http://localhost:3500/auth', {
+            const response = await fetch('http://localhost:4000/auth', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
