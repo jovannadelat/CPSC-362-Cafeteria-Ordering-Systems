@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './LoginSignup.css'; // make sure to import the CSS file
+import './LoginSignup.css';
 
-import user_icon from '../../assets/LoginSignup/person.png'
-import email_icon from '../../assets/LoginSignup/email.png'
-import password_icon from '../../assets/LoginSignup/password.png'
+import email_icon from '../../assets/LoginSignup/email.png';
+import password_icon from '../../assets/LoginSignup/password.png';
 
 const LoginSignup = () => {
     const [action, setAction] = useState('Login');
@@ -44,7 +43,9 @@ const LoginSignup = () => {
             });
 
             const data = await response.json();
+
             if (response.ok) {
+                localStorage.setItem('token', data.accessToken); // or use data.token based on your backend
                 setError('');
                 navigate('/home');
             } else {
@@ -84,7 +85,7 @@ const LoginSignup = () => {
                 </div>
                 {error && <p className="forgot-password">{error}</p>}
                 <div className="submit-container">
-                    <button 
+                    <button
                         className="submit"
                         onClick={action === 'Login' ? handleLogin : handleSignup}
                     >

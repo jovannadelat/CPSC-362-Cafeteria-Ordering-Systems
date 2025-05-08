@@ -21,7 +21,7 @@ const handleLogin = async (req, res) => {
         const accessToken = jwt.sign(
             { "UserInfo": { "email": foundUser.email, "roles": roles } },
             process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: '30s' }
+            { expiresIn: '60s' }
         );
         const refreshToken = jwt.sign(
             { "email": foundUser.email },
@@ -34,7 +34,7 @@ const handleLogin = async (req, res) => {
         const result = await foundUser.save();
         console.log(result);
 
-        res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }); // Set cookie for 1 day
+        res.cookie('jwt', refreshToken, { httpOnly: true, secure:true, sameSite:'None', maxAge: 24 * 60 * 60 * 1000 }); // Set cookie for 1 day
         res.json({ accessToken }); // Send access token as response
     } else {
         res.sendStatus(401); // Unauthorized if password doesn't match

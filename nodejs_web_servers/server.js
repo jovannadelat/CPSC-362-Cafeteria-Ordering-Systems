@@ -2,21 +2,21 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-const corsOptions = require('./config/corsOptions')
+const corsOptions = require('./config/corsOptions');
 const {logger} = require('./middleware/logEvents');
 const errorHandler = require('./middleware/errorHandler');
 const verifyJWT = require('./middleware/verifyJWT');
 const cookieParser = require('cookie-parser');
 const credentials = require('./middleware/credentials');
 const mongoose = require('mongoose');
-const connectDB = require('./config/dbConn')
+const connectDB = require('./config/dbConn');
 const app = express();
 const PORT = process.env.PORT || 4000;
 
 // Connect to MongoDB
 connectDB();
 
-// npm i nodemon jsonwebtoke express dotenv uuid bcrypt cookie-parser cors
+// npm i nodemon jsonwebtoken express dotenv uuid bcrypt cookie-parser cors
 
 // custom middleware logger
 app.use(logger);
@@ -25,31 +25,34 @@ app.use(logger);
 // and fetch cookies credentials requirement
 app.use(credentials);
 
-// Cross Orgin Resource Sharing
+// Cross Origin Resource Sharing
 app.use(cors(corsOptions));
 
-//middle ware for url encoded date : form-data
+// Middleware for URL encoded data: form-data
 app.use(express.urlencoded({extended:false}));
 
-// build in middleware for json
+// Built-in middleware for JSON
 app.use(express.json());
 
-// middleware for cookies
+// Middleware for cookies
 app.use(cookieParser());
 
-// serve static files
+// Serve static files
 app.use('/', express.static(path.join(__dirname, '/public')));
 
-//routes
+// Routes
 app.use('/', require('./routes/api/root'));
 app.use('/register', require('./routes/api/register'));
 app.use('/auth', require('./routes/api/auth'));
 app.use('/refresh', require('./routes/api/refresh'));
 app.use('/logout', require('./routes/api/logout'));
 
+// Protected routes (example)
 app.use(verifyJWT);
 app.use('/employees', require('./routes/api/employees'));
 
+// New menu routes
+app.use('/menu', require('./routes/api/menu'));
 
 // 404 handler — MUST be last
 app.all(/.*/, (req, res) => {
@@ -64,10 +67,12 @@ app.all(/.*/, (req, res) => {
     }
 });
 
-app.use(errorHandler)
+// Error handling middleware
+app.use(errorHandler);
+
 mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB');
     app.listen(PORT, () => {
         console.log(`Server running on port ${PORT}`);
     });    
-})
+});
