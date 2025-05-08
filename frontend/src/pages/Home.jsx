@@ -59,7 +59,7 @@ function Home() {
                 <div style={buttonContainerStyle}>
                     <Link to="/menu" style={buttonStyle}>View Menu</Link>
                     <Link to="/order-history" style={buttonStyle}>Order History</Link>
-                    <button style={buttonStyle} onClick={() => {}}>Modify Menu</button>
+                    <Link to="/modify-menu" style={buttonStyle}>Modify Menu</Link> {/* Updated to Link */}
                     <button style={buttonStyle} onClick={handleLogout}>Logout</button>
                 </div>
             </div>
@@ -68,4 +68,3 @@ function Home() {
 }
 
 export default Home;
-
