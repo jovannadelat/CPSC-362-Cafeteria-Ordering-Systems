@@ -63,6 +63,29 @@ const TotalBox = styled.div`
   height: 150px;
 `;
 
+const PaymentBox = styled.div`
+  background-color: #f9f9f9;
+  padding: 10px;
+  margin-bottom: 10px;
+`;
+
+const PaymentInput = styled.input`
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+`;
+
+const PaymentRow = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
+const PaymentField = styled.div`
+  flex: 1;
+`;
+
 const ButtonBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -84,10 +107,39 @@ const CheckoutButton = styled.button`
 const Checkout = () => {
   const navigate = useNavigate();
   const { cartItems, incrementItem, decrementItem, clearCart } = useCart();
+  const [cardNumber, setCardNumber] = React.useState('');
+  const [expDate, setExpDate] = React.useState('');
+  const [cvv, setCvv] = React.useState('');
 
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   const handleCheckout = () => {
+    if (!cardNumber || !expDate || !cvv) {
+      alert('Please fill in all payment details');
+      return;
+    }
+    
+    if (cardNumber.length !== 16 || !/^\d+$/.test(cardNumber)) {
+      alert('Please enter a valid 16-digit card number');
+      return;
+    }
+    
+    if (!/^\d{2}\/\d{2}$/.test(expDate)) {
+      alert('Please enter expiration date in MM/YY format');
+      return;
+    }
+
+    const month = parseInt(expDate.split('/')[0], 10); 
+    if (month < 1 || month > 12) {
+      alert('Month must be between 01-12');
+      return;
+    }
+    
+    if (cvv.length < 3 || cvv.length > 4 || !/^\d+$/.test(cvv)) {
+      alert('Please enter a valid CVV (3 or 4 digits)');
+      return;
+    }
+
     alert('Order placed successfully!');
     clearCart();
     navigate('/home');
@@ -120,6 +172,46 @@ const Checkout = () => {
           <p>${total.toFixed(2)}</p>
         </TotalBox>
 
+        <PaymentBox>
+          <h3>Payment Information</h3>
+          <PaymentInput
+            type="text"
+            placeholder="Card Number"
+            value={cardNumber}
+            onChange={(e) => setCardNumber(e.target.value.replace(/\D/g, ''))}
+            maxLength="16"
+          />
+          <PaymentRow>
+            <PaymentField>
+              <PaymentInput
+                type="text"
+                placeholder="MM/YY"
+                value={expDate}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (value.length <= 5) {
+                    let newValue = value.replace(/\D/g, '');
+                    if (newValue.length > 2) {
+                      newValue = newValue.substring(0, 2) + '/' + newValue.substring(2);
+                    }
+                    setExpDate(newValue);
+                  }
+                }}
+                maxLength="5"
+              />
+            </PaymentField>
+            <PaymentField>
+              <PaymentInput
+                type="text"
+                placeholder="CVV"
+                value={cvv}
+                onChange={(e) => setCvv(e.target.value.replace(/\D/g, ''))}
+                maxLength="4"
+              />
+            </PaymentField>
+          </PaymentRow>
+        </PaymentBox>
+
         <ButtonBox>
           <CheckoutButton onClick={handleCheckout}>Confirm Order</CheckoutButton>
           <CheckoutButton onClick={() => navigate('/menu')}>Back to Menu</CheckoutButton>
@@ -130,4 +222,3 @@ const Checkout = () => {
 };
 
 export default Checkout;
-
