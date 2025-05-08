@@ -3,6 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useCart } from "../Checkout-Page/CartContext";
 
+const PageBackground = styled.div`
+  background-image: url("https://images.unsplash.com/photo-1730780883153-b3c046b001c1?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  padding: 40px;
+`;
+
 const MenuLayout = styled.div`
     display: flex;
     gap: 20px;
@@ -59,7 +67,7 @@ const foodItems = [
     { id: 2, name: "Pizza", price: 7.49, image: "https://plus.unsplash.com/premium_photo-1664391921404-591084d5d2be?q=80&w=2867&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
     { id: 3, name: "Salad", price: 4.25, image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=2960&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
     { id: 4, name: "Pasta", price: 6.80, image: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?q=80&w=2706&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-    { id: 5, name: "Tacos", price: 5.00, image: "https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?q=80&w=2942&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+    { id: 5, name: "Tacos", price: 5.00, image: "https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?q=80&w=2942&auto=format&fit=crop&ixib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
 ];
 
 const drinkItems = [
@@ -83,36 +91,37 @@ const Menu = () => {
     };
 
     return (
-        <MenuLayout>
-            <ItemContainer>
-                <h2>Food Items</h2>
-                {foodItems.map(item => (
-                    <ItemCard key={item.id}>
-                        <ItemImage src={item.image} alt={item.name} />
-                        <h4>{item.name}</h4>
-                        <p>${item.price.toFixed(2)}</p>
-                        <MenuButton onClick={() => addToCart(item)}>Add to Cart</MenuButton>
-                    </ItemCard>
-                ))}
-            </ItemContainer>
+        <PageBackground>
+            <MenuLayout>
+                <ItemContainer>
+                    <h2>Food Items</h2>
+                    {foodItems.map(item => (
+                        <ItemCard key={item.id}>
+                            <ItemImage src={item.image} alt={item.name} />
+                            <h4>{item.name}</h4>
+                            <p>${item.price.toFixed(2)}</p>
+                            <MenuButton onClick={() => addToCart(item)}>Add to Cart</MenuButton>
+                        </ItemCard>
+                    ))}
+                </ItemContainer>
 
-            <ItemContainer>
-                <h2>Drink Items</h2>
-                {drinkItems.map(item => (
-                    <ItemCard key={item.id}>
-                        <ItemImage src={item.image} alt={item.name} />
-                        <h4>{item.name}</h4>
-                        <p>${item.price.toFixed(2)}</p>
-                        <MenuButton onClick={() => addToCart(item)}>Add to Cart</MenuButton>
-                    </ItemCard>
-                ))}
-                
-            </ItemContainer>
+                <ItemContainer>
+                    <h2>Drink Items</h2>
+                    {drinkItems.map(item => (
+                        <ItemCard key={item.id}>
+                            <ItemImage src={item.image} alt={item.name} />
+                            <h4>{item.name}</h4>
+                            <p>${item.price.toFixed(2)}</p>
+                            <MenuButton onClick={() => addToCart(item)}>Add to Cart</MenuButton>
+                        </ItemCard>
+                    ))}
+                </ItemContainer>
+            </MenuLayout>
             <ButtonBox>
-                    <MenuButton onClick={handleBackClick}>Back</MenuButton>
-                    <MenuButton onClick={handleCheckoutClick}>Checkout</MenuButton>
-                </ButtonBox>
-        </MenuLayout>
+                <MenuButton onClick={handleBackClick}>Back</MenuButton>
+                <MenuButton onClick={handleCheckoutClick}>Checkout</MenuButton>
+            </ButtonBox>
+        </PageBackground>
     );
 };
 
